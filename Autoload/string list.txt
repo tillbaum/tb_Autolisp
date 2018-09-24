@@ -1,0 +1,49 @@
+; aus Kochbuch autolist kap 3.1 STRING Bearbeitung!!
+;
+; 
+
+(defun str-list(str / ls i)
+	(setq i 1)
+	(repeat(strlen str)
+		(setq ls(cons(substr str i 1)ls))
+		(setq i(1+ i))
+	)
+	(reverse ls)
+)
+
+;Anwendungsbeispiel:
+;(str-list "String") => ("S" "t" "r" "i" "n" "g")
+;Jetzt können wir unsere universell verwendbaren Trimm-Funktionen schreiben:
+
+; Leerzeichen von links entfernen string
+(defun str-ltrimset(str cset / i)
+ (if(>(strlen str)0)
+ (progn
+ (setq cset(str-list cset))
+ (setq i 1)
+ (while(member(substr str i 1)cset)
+ (setq i(1+ i))
+ )
+ (substr str i)
+ )
+ )
+)
+
+
+(defun str-rtrimset(str cset / len)
+ (if(>(strlen str)0)
+ (progn
+ (setq cset(str-list cset))
+ (setq len(strlen str))
+ (while(member(substr str len 1)cset)
+ (setq len(1- len))
+ )
+Lizenziert für franz-tanz@web.de.
+© 2014 Carl Hanser Fachbuchverlag. Alle Rechte vorbehalten. Keine unerlaubte Weitergabe oder Vervielfältigung.
+- orderid - 21619347 - transid - 21619347_1D 
+ 3.1 Zeichenketten-Verarbeitung AutoLisp
+155
+ (substr str 1 len)
+ )
+ )
+)

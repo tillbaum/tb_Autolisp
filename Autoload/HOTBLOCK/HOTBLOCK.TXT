@@ -1,0 +1,117 @@
+
+	HOTBLOCKS v1.2  Freeware version.
+	Created by Lintang Darudjati
+	http://www.geocities.com/RainForest/1073/
+	e-mail: lintangd@geocities.com
+	
+	
+	Description:
+	=========
+	A block manager with INI style customization file and a dialog box performing 
+	collection-grouping, file path display, and slide previews as 'hot thumbnails'.
+	Build your own dwg block library with it.
+	
+	
+	Platform:
+	======
+	HotBlocks had been tested in AutoCAD Release 12/13/14 running on DOS, Win
+	95/98 and NT 4.0. It may or may not work in other version and platform. 
+	
+	
+	Installation:
+	========
+	There are subdirectories/subfolders inside INSTALL.ZIP, decompress it with all
+	subfolders within. 
+
+	- For pkunzip users, use -d parameter. ( e.g. pkunzip -d install.zip c:\ )
+	- For WinZip users, check the 'Use folder names' check box in 'extract' dialog box.
+	
+	That process will create a new folder named 'Hotblock'. It contains: 
+		HOTBLOCK.LSP
+		HOTBLOCK.DCL
+		HOTBLOCK.INI
+	   	HOTBLOCK.TXT
+		3 sample sub-folders with sample DWG files.
+
+	Start AutoCAD, then include the 'Hotblock' folder as your AutoCAD search-path 
+	by invoking "PREFERENCES" command. Restart AutoCAD to apply changes.
+	
+	
+	Running HotBlocks:
+	==============
+	- For automatic loading each time you begin new drawing session, put this line 
+	below in your ACAD.LSP:
+	                               (load "HOTBLOCK")
+	- For loading HotBlocks manually, type (load "HOTBLOCK") at command prompt.
+		
+	Type HOTB to start command.
+	
+	
+	Initialization file (HOTBLOCK.INI) format:
+	=============================
+	You must edit HOTBLOCK.INI to add or change your own drawing library. 
+	To see how it works, please also take a look at the sample folder structure. 
+	It describes itself more clearly.
+	
+	The INI structure is:
+	----------------------------
+	[groupname] 
+	Subdir=asubfolder  
+	dwgname 
+	dwgname
+	dwgname
+	...
+	dwgname
+	---------------------------
+
+	groupname: 
+	each group name that appears in 'Group' drop-down list box ( e.g [Door] )
+	
+	asubfolder:
+	name of subfolder in your library path that contains all .dwg and .slb files belong
+	to related group. Your related .slb file must be named as same as the last subfolder
+	in folder-tree.
+	e.g. if Subdir=Door ,slide library filename should be Door.slb 
+	if Subdir=Kitchen\Sink ,slide library filename should be Sink.slb  ,etc.
+	
+	dwgname:
+	name of dwg file (without extension) listed as an item in 'Item' list box. 
+	It must be as same as the related slide name found inside .slb file
+	
+	
+	Slides and Slide Library:
+	==================
+	Each slide name in .slb file must be exactly as same as each corresponding dwg name.
+	For example, in the sample .slb file named HUM.SLB, it contains slides named HUM01,
+	HUM02, HUM03, ..., HUM10 to represent .dwg files named HUM01.DWG, HUM02.DWG,
+	HUM03, ..., HUM10.DWG. 
+
+	Use SLIDELIB.EXE in AutoCAD's 'support' folder to build your .slb files.
+
+	Each time you want to add a dwg in your own drawing library, you must prepare the 
+	drawing itself, create it's slide, and build a slide library containing all slides in	related
+	folder. But if you agree, creating so many slides and slide libraries is really torturing !
+	I suggest you to download 'Slide Factory' (another freeware stuff from me)  from my 
+	web-site. 'Slide Factory' will help you automating the slide-creation process and slide
+	library building, make it fast and easy. Try it !
+	
+	
+	Known disabilities:
+	==============
+	An error occurs if your HOTBLOCK.INI contains a reference to a file that can't be found. 
+	So be sure all required files and folders referenced in HOTBLOCK.INI are really exist.
+	
+	
+	Thank you for using HotBlocks v1.2
+	
+	Contact me to get the version without the opening 'nag' dialog box. I'll give it 100% free
+	for you. Tell me who and where you are or anything about you, I just want to know you 
+	and where my software is being used.
+	Please also contact me for bugs reporting, question, comment, and suggestion.
+	Visit my website to check and get last updated version of HotBlocks 
+	....and get many other freeware stuff there !!!
+	
+	
+	Lintang Darudjati
+
+	

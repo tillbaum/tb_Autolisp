@@ -1,0 +1,705 @@
+(function(w,d,a){var $,i,k="",m=Math;for(i=0;i<8;i=i+1){k=k+String.fromCharCode(m.floor(m.random()*26)+97)}$=w[k]={};$.k=k;$.w=w;$.d=d;$.a=a;$.f=function(){var s={kk:[],api:{getTitle:function(){return $.d.title},getUrl:function(){return $.d.URL},getReferrer:function(){return $.d.referrer}},listen:function(el,ev,fn){if(typeof $.w.addEventListener!=="undefined"){el.addEventListener(ev,fn,false)}else if(typeof $.w.attachEvent!=="undefined"){el.attachEvent("on"+ev,fn)}},unlisten:function(el,ev,fn){if(typeof el.removeEventListener!=="undefined"){el.removeEventListener(ev,fn,false)}else if(typeof el.detachEvent!=="undefined"){el.detachEvent("on"+ev,fn)}},postMessage:function(w,m){if(typeof w.postMessage!=="undefined"){w.postMessage(m,"*")}},getSexy:function(n){var i,k="",s="0123456789ABCDEFGHJKLMNPQRSTUVWXYZ_abcdefghijkmnopqrstuvwxyz";for(i=0;i<12;i=i+1){k=k+s.substr(Math.floor(Math.random()*60),1)}return k},readCookie:function(t){var i,k,v;var p=$.d.cookie.split(";");var n=p.length;for(i=0;i<n;i=i+1){k=p[i].split("=")[0];if(k.charAt(0)==" ")k=k.substring(1);v=p[i].split("=")[1];if(k===t){return v}}return null},writeCookie:function(k,v){var cookieExpires=new Date;cookieExpires.setTime($.v.startTime+$.a.daysToExpire*24*60*60*1e3);$.d.cookie=k+"="+v+"; expires="+cookieExpires.toGMTString()+"; path=/;"},getTarget:function(e){var el=null;if(e.target){el=e.target.nodeType===3?e.target.parentNode:e.target}else{el=e.srcElement}return el},callback:function(r){if(r&&r.newClickId){$.v.hitId=r.newClickId}if(r&&r.v){$.v.visitorId=r.v;$.f.writeCookie($.a.cookieId,$.v.visitorId)}if(r.chat&&!$.v.chatShown){$.f.startChat(r.chat)}},startChat:function(data){$.v.chatShown=true;if(typeof window.postMessage==="undefined"){$.f.run($.a.server+"/"+$.a.publicId+"/v/"+$.v.visitorId+"/cir/1/",{});return}var ll_chat_notification=document.createElement("div");ll_chat_notification.id="ll_chat_notification";ll_chat_notification.style.zIndex="100003";ll_chat_notification.style.position="fixed";ll_chat_notification.style.width="0px";ll_chat_notification.style.height="0px";ll_chat_notification.overflow="hidden";ll_chat_notification.style.bottom="0px";if(!$.f.isMobileAgent())ll_chat_notification.style.right="10px";var iframe=document.createElement("iframe");var qp="";for(var key in data){if(!data.hasOwnProperty(key))continue;if(key==="host")continue;if(qp)qp+="&";qp+=encodeURIComponent(key)+"="+encodeURIComponent(data[key])}iframe.src=(data.host+"/chat/popup?"+qp).replace(/^(http:)?\/\//,"https://");iframe.style.zIndex="100003";iframe.scrolling="no";iframe.style.height="100%";iframe.style.width="100%";if($.f.isMobileAgent()){iframe.style.border="0";iframe.style.height="200px"}ll_chat_notification.appendChild(iframe);document.body.appendChild(ll_chat_notification);function flashTitle(newTitle,period){var oldTitle=$.d.title;var id=setInterval(function(){if($.d.title==newTitle){$.d.title=oldTitle}else{$.d.title=newTitle}},period);return function(){clearInterval(id);$.d.title=oldTitle}}var unflash;$.f.listen($.w,"message",function(event){event=event||window.event;var match=event.data.match(/^size:([0-9]*):([0-9]*)$/);if(match){var w=match[1],h=match[2];ll_chat_notification.style.width=w+"px";ll_chat_notification.style.height=h+"px";ll_chat_notification.style.display="block";unflash=flashTitle("Chat Requested",1e3);return}if(event.data==="show chat"&&$.f.isMobileAgent()){ll_chat_notification.style.left="0";ll_chat_notification.style.width="100%";ll_chat_notification.style.height="48px";ll_chat_notification.style.display="block";unflash=flashTitle("Chat Requested",1e3);return}if(event.data!=="close iframe")return;unflash();$.w.setTimeout(function(){$.v.chatShown=false},4e3);if(ll_chat_notification.parentNode)ll_chat_notification.parentNode.removeChild(ll_chat_notification);$.f.run($.a.server+"/"+$.a.publicId+"/v/"+$.v.visitorId+"/cir/1",{})})},kill:function(id){var s=$.d.getElementById($.k+".f.kk["+id+"]");if(typeof s==="object"&&s.tagName&&s.parentNode){s.parentNode.removeChild(s)}},run:function(url,qp){var t=$.f.kk.length,n=$.d.getElementsByTagName("SCRIPT")[0],s=$.d.createElement("SCRIPT");$.f.kk[t]=function(r){$.f.kill(t);$.f.callback(r)};url=url+"/c/"+$.k+".f.kk["+t+"]";if(typeof qp==="object"){var first=true;for(var k in qp){url=url+(first?"?":"&")+k+"="+encodeURIComponent(qp[k]);first=false}}s.src=$.d.location.protocol+"//"+url;s.type="text/javascript";s.id=$.k+".f.kk["+t+"]";n.parentNode.insertBefore(s,n)},ping_url:function(first){if(typeof first==="undefined")first=false;var url=$.a.server;var qp={};var pageUrl=$.f.api.getUrl();var attribution=$.d.getElementById("lexitySalesAttribution")||$.d.getElementById("vurveSalesAttribution")||$.d.getElementById("lex_invoice_id");if(attribution&&attribution.name){$.a.pageClass="confirm";if(pageUrl.indexOf("?")!==-1){pageUrl+="&invoiceId="+attribution.name}else{pageUrl+="?invoiceId="+attribution.name}}if($.a.embedHash&&$.a.partnerCode&&$.a.merchantId){url+="/embed/"+$.a.partnerCode+"/"+$.a.embedHash;qp={id:$.a.merchantId,ts:(new Date).getTime()}}else{url+="/"+$.a.publicId}if(!first)url+="/h/1";url+="/v/"+$.v.visitorId+"/k/"+$.v.hitId+"/u/"+encodeURIComponent(pageUrl);url+="/n/"+$.a.time_start;var buying_flag=$.d.getElementById("lex_user_in_cart");if($.v.look_for_div&&buying_flag){$.a.pageClass="buying";$.v.look_for_div=false;buying_flag.parentNode.removeChild(buying_flag)}if($.a.pageClass)url+="/x/"+encodeURIComponent($.a.pageClass);if($.f.api.getTitle())url+="/t/"+encodeURIComponent($.f.api.getTitle());if($.f.api.getReferrer())url+="/r/"+encodeURIComponent($.f.api.getReferrer());if($.a.version)url+="/vn/"+encodeURIComponent($.a.version);return[url,qp]},phoneHome:function(first){var a=$.f.ping_url(first);var url=a[0];var qp=a[1];$.f.run(url,qp)},ping:function(first){$.f.phoneHome(first);var now=(new Date).getTime();if(now-$.v.startTime<$.a.maxSessionLength){$.w.setTimeout(function(){$.f.ping()},$.a.pingInterval*1e3)}},buildConversion:function(args){if(typeof args==="object"&&args.id){var query="",key="",path="//www.googleadservices.com/pagead/conversion/"+args.id,img=$.d.createElement("IMG");for(key in args){if(args[key].hasOwnProperty){if(key!=="id"){if(query){query=query+"&"}else{query="/?"}query=query+encodeURIComponent(key)+"="+encodeURIComponent(args[key])}}}img.height=1;img.width=1;img.style.height="1px";img.style.width="1px";img.style.position="absolute";img.style.top="-1000px";img.style.left="-1000px";img.src=path+query;$.d.b.appendChild(img)}},getVisitorId:function(vpx,cont){$.v.visitorId=$.f.readCookie($.a.cookieId);$.f.listen($.w,"message",receiveVisitorId);var iframed=$.w.top!=$.w;if(iframed)$.f.postMessage($.w.top,"Get Lexity visitorId");var giveUp=$.w.setTimeout(rest,100);function receiveVisitorId(event){event=event||window.event;if(!event||!event.data)return;var s=event.data.split("=");if(s.length===2&&s[0]==="Lexity visitorId"){$.v.visitorId=s[1];$.w.clearTimeout(giveUp)}}function rest(){$.f.unlisten($.w,"message",receiveVisitorId);if(!$.v.visitorId){$.v.visitorId=$.f.getSexy()}if(vpx){$.v.visitorId=vpx.split(";")[0]}else if(!iframed){$.w.name=$.w.name+"_vpx="+$.v.visitorId+";"}$.f.writeCookie($.a.cookieId,$.v.visitorId);cont()}},setupYcc:function(setupYccCb){var old_ycc=[].concat($.w._ycc||[],$.w._lex||[]);var toSend={};var e=encodeURI;var url_prefix=function(){return $.a.server+"/"+$.a.publicId+"/v/"+$.v.visitorId+"/k/"+$.v.hitId};var count=0;function getWaiter(){count++;return function(){count--;if(count<=0)setupYccCb()}}var _ycc_handler={_awaitSetup:function(cb){cb()},_delayPings:function(cb){cb(getWaiter())},_rule:function(message){var urlRule=url_prefix()+"/rule/"+e(message);$.f.run(urlRule,null)},_addTrans:function(id,store_name,total,tax,shipping,city,state,country){toSend["_addTrans"]=Array.prototype.slice.call(arguments,0)},_addItem:function(id,sku,name,variant,unit_price,quantity){toSend["_addItem"]=toSend["_addItem"]||[];toSend["_addItem"].push(Array.prototype.slice.call(arguments,0))},_trackTrans:function(){var sendString=url_prefix()+"/ecomm/"+e(JSON.stringify(toSend));$.f.run(sendString,null);toSend={}}};$.w._ycc={__internal:$,push:function(arr){if(Object.prototype.toString.call(arr)!="[object Array]"||!arr[0]||!_ycc_handler.hasOwnProperty(arr[0])){return false}_ycc_handler[arr[0]].apply(null,arr.slice(1))}};$.w._lex=$.w._ycc;for(var i=0;i<old_ycc.length;i++){$.w._ycc.push(old_ycc[i])}getWaiter()()},lookForOrders:function(){var result=[];var scripts=$.d.getElementsByTagName("script");var scraped_orders=[];for(var i=0;i<scripts.length;i++){var text=scripts[i].innerHTML;var gaq_regex=/_gaq.push\(([^)]*)\)/g;var match;var res=[];while(match=gaq_regex.exec(text))res.push(match[1]);scraped_orders.push(res)}scraped_orders=[].concat.apply([],scraped_orders);var parsed_orders=[];for(var i=0;i<scraped_orders.length;i++){var res;try{res=eval(scraped_orders[i])}catch(e){res=null}if(res)parsed_orders.push(eval(scraped_orders[i]))}var supported_commands={_addTrans:1,_addItem:1,_trackTrans:1};for(var i=0;i<parsed_orders.length;i++){if(supported_commands[parsed_orders[i][0]]){result.push(parsed_orders[i])}}$.w._ycc=$.w._ycc||[];for(var i=0;i<result.length;i++){$.w._ycc.push(result[i])}},isMobileAgent:function(){return/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)},init:function(){if(typeof $.w.name==="undefined"){$.w.name=""}if($.a.publicId==="1e817333")$.f.lookForOrders();$.a.time_start=$.a.time_start||0;var vpx=$.w.name.split("_vpx=")[1];$.d.b=$.d.getElementsByTagName("BODY")[0];if($.a.cid&&$.a.lab){$.f.buildConversion({id:$.a.cid,label:$.a.lab,format:3,language:"en",color:"666666",value:0})}$.v={rf:0,hitId:$.f.getSexy(),startTime:(new Date).getTime(),look_for_div:true};$.f.getVisitorId(vpx,function(){$.f.setupYcc(function(){$.f.listen($.w,"message",function(event){event=event||window.event;if(!event)return;if(event.data==="Get Lexity visitorId"){$.f.postMessage(event.source,"Lexity visitorId="+$.v.visitorId)}});if(!$.a.silent)$.f.ping(true)})})}};;return s}();$.w.setTimeout(function(){$.f.init()},100)})(window,document,{"publicId":"YW.34fce9d427e2","embedHash":"34cfc7382245b4d9cf990df0116c7581","partnerCode":"YW","merchantId":"34fce9d427e2","pageClass":"","server":"np.lexity.com","click_id":"","silent":"","time_start":"1452417345474","daysToExpire":1000,"waitBeforeUnload":300,"cookieId":"_vpx","pingInterval":4,"maxSessionLength":1200000,"version":1});(function(w,d,a){var $,i,k="",m=Math;for(i=0;i<8;i=i+1){k=k+String.fromCharCode(m.floor(m.random()*26)+97)}$=w[k]={};$.k=k;$.w=w;$.d=d;$.a=a;$.f=function(){var s ={
+
+  getHighestZIndex: function() {
+    var elements = document.querySelectorAll('*') || oXmlDom.documentElement.selectNodes('*'),
+    i = 0,
+    e, s,
+    max = elements.length,
+    found = [];
+
+    for(; i < max; i += 1) {
+      e = window.getComputedStyle !== undefined ? window.getComputedStyle(elements[i], null).zIndex : elements[i].currentStyle.zIndex;
+      s = window.getComputedStyle !== undefined ? window.getComputedStyle(elements[i], null).position : elements[i].currentStyle.position;
+
+      if (e && e !== 'auto' && s !== 'static') {
+        found.push(parseInt(e, 10));
+      }
+    }
+
+    return found.length ? Math.max.apply(null, found) : 0;
+  },
+  fadeIn: function(el, cb) {
+    var opacity = 0.1;
+    el.style.opacity = 0;
+    el.style.display = 'block';
+
+    var timer = setInterval(function() {
+      if (opacity >= 1) {
+        clearInterval(timer);
+        el.style.opacity = 1;
+        if (cb) {
+          cb();
+        }
+      }
+
+      el.style.opacity = opacity;
+      el.style.filter = 'alpha(opacity=' + opacity * 100 + ')';
+      opacity += opacity * 0.1;
+    }, 10);
+  },
+  fadeOut: function(el, cb) {
+    var opacity = 1;
+
+    var timer = setInterval(function() {
+      if (opacity <= 0.1) {
+        clearInterval(timer);
+        el.style.opacity = 0;
+        el.style.display = 'none';
+        if (cb) {
+          cb();
+        }
+      }
+      el.style.opacity = opacity;
+      el.style.filter = 'alpha(opacity=' + opacity * 100 + ')';
+      opacity -= opacity * 0.1;
+    }, 10);
+  },
+  animateSize: function(el, startWidth, startHeight, endWidth, endHeight, duration, cb) {
+    var _duration = duration !== undefined ? duration : 500;
+    Date.now = Date.now || function() { return +new Date; };
+    var _startTime = (window.performance !== undefined && window.performance.now !== undefined) ? window.performance.now() : Date.now();
+
+    var _easingFunction = function(k) {
+      if ((k *= 2) < 1) return 0.5 * k * k;
+      return -0.5 * (--k * (k - 2) - 1);
+    };
+
+    var update = function(time) {
+      var elapsed = (time - _startTime) / _duration;
+      elapsed = elapsed > 1 ? 1 : elapsed;
+
+      var value = _easingFunction(elapsed);
+      var newWidth = startWidth + (endWidth - startWidth) * value;
+      var newHeight = startHeight + (endHeight - startHeight) * value;
+      if(isNaN(newHeight))
+        newHeight = '338';
+      el.style.width = newWidth + 'px';
+      el.style.height = newHeight + 'px';
+
+      if (elapsed == 1) {
+        cb();
+        return false;
+      }
+      return true;
+    };
+
+    var timeout = setInterval(function() {
+      var time = (window.performance !== undefined && window.performance.now !== undefined) ? window.performance.now() : Date.now();
+      var cont = update(time);
+      if (!cont) clearInterval(timeout);
+    }, 10);
+  },
+  createBadge: function(zIndex,isMobile,liveBadgePosition) {
+    var ll_badge = document.createElement('div');
+    ll_badge.id = 'll_badge';
+    ll_badge.className += liveBadgePosition;
+
+    ll_badge.style.display = 'inline-block';
+    ll_badge.style.zIndex = zIndex + 21 + '';
+
+
+
+    var badge_footer = document.createElement('div');
+    badge_footer.id = "ll_badge_footer";
+
+    var award_keys = [];
+    var ie8 = navigator.userAgent.toLowerCase();
+    ie8 = (ie8.indexOf('msie') != -1) ? parseInt(ie8.split('msie')[1]) : false == 8;
+    if(ie8){
+      for (var i in $.a.awards) {
+        if ($.a.awards.hasOwnProperty(i)) {
+          award_keys.push(i);
+        }
+      }
+    }
+    else{
+      award_keys = Object.keys($.a.awards);
+    }
+
+    // append first award to ll_badge
+    if (award_keys.length > 0) {
+      var award = document.createElement('div');
+      award.id = 'll_award';
+
+
+      var award_text = document.createElement('span');
+      award_text.id = 'll_award_names';
+      award_text.innerHTML = award_keys[0];
+      award_text.style.fontFamily = 'Helvetica Neue, Helvetica, Arial, sans-serif';
+
+      award.appendChild(award_text);
+      ll_badge.appendChild(award);
+    }
+
+    ll_badge.appendChild(badge_footer);
+
+    return ll_badge;
+  },
+  createPanel: function(zIndex,isMobile,liveBadgePosition) {
+    var ll_panel = document.createElement('div');
+    ll_panel.id = 'll_panel';
+    ll_panel.className += liveBadgePosition;
+    ll_panel.style.zIndex = zIndex + 2147483645 + '';
+    if(isMobile && window.matchMedia("(orientation: portrait)").matches){
+      ll_panel.style.width = screen.width + "px";
+      ll_panel.style.margin = "-5px";
+    }
+    var productsToDisplay = $.a.productsToDisplay;
+
+    /*
+     * This variable will be used to track if the user clicked on top products (generated by us)
+     * or recommended products.
+     * For backward compatibility reasons, "productlink" will signify that it's a top selling product
+     * and "recoproduct" for recommended product.
+     */
+    var _vm = "productlink";
+    switch(productsToDisplay){
+      case "top-products":
+          var products = $.a.topProducts;
+          var productsLen = $.a.topProducts.length;
+          var products_headerinnerHTML = "TOP SELLING PRODUCTS";
+      break
+      case "promoted-products":
+          var products = $.a.promotedProducts;
+          var productsLen = products.length;
+          var products_headerinnerHTML = "RECOMMENDED PRODUCTS";
+          _vm = "recoproduct";
+      break
+    }
+
+
+
+    var panel_header = document.createElement('div');
+    panel_header.id = 'panel_header';
+
+    if(isMobile){
+      var close_btn = document.createElement('a');
+      close_btn.id = "panel_close_btn";
+      close_btn.href = "#";
+
+      var close_icon = document.createElement('a');
+      close_icon.id = "panel_close_icon";
+      close_icon.href = "#";
+      close_btn.appendChild(close_icon);
+      panel_header.appendChild(close_btn);
+    }
+
+
+    var new_line_award = 1;
+    if ($.a.storeLogo) {
+      store_logo_img = new Image();
+      store_logo_img.src = $.a.storeLogo.replace(/https?:\/\//, "//");
+      var store_logo = document.createElement('img');
+      store_logo.onerror = function(){this.src="about:blank";};
+      store_logo.id = 'store_logo';
+      store_logo.style.maxHeight = '30px';
+      store_logo.src = $.a.storeLogo.replace(/https?:\/\//, "//");
+
+      store_logo_img.onload = function(){
+        var store_logo_element = document.getElementById('store_logo');
+        if(store_logo_img.width != store_logo_img.height){
+          store_logo_element.style.maxHeight = '30px';
+        }
+        else{
+          store_logo_element.style.maxHeight = '45px';
+          store_logo_element.style.maxWidth = '45px';
+          var award_container_element = document.getElementById("award-container");
+          award_container_element.style.display = 'inline-block';
+          award_container_element.style.width = '230px';
+          award_container_element.style.marginLeft = '14px';
+          award_container_element.style.verticalAlign = 'middle';
+          new_line_award = 0;
+        }
+
+      };
+      panel_header.appendChild(store_logo);
+    } else {
+      var store_name = document.createElement('span');
+      store_name.id = "store_name";
+      store_name.innerHTML = $.a.storeName;
+      store_name.style.fontFamily = 'Helvetica Neue, Helvetica, Arial, sans-serif';
+
+      panel_header.appendChild(store_name);
+    }
+
+    var ie8 = navigator.userAgent.toLowerCase();
+    ie8 = (ie8.indexOf('msie') != -1) ? parseInt(ie8.split('msie')[1]) : false == 8;
+
+    var award_keys = [];
+    if(ie8){
+      for (var i in $.a.awards) {
+        if ($.a.awards.hasOwnProperty(i)) {
+          award_keys.push(i);
+        }
+      }
+    }
+    else{
+      award_keys = Object.keys($.a.awards);
+    }
+
+    if (award_keys.length > 0){
+      var key = award_keys[0];
+      var award_container = document.createElement('div');
+      award_container.id = 'award-container';
+
+      var award = document.createElement('div');
+      award.id = "panel_award";
+      award.style.marginTop = '10px';
+
+      var award_name = document.createElement('span');
+      award_name.id = "panel_award_name";
+      award_name.innerHTML = key + '<br>';
+      award_name.style.fontFamily = 'Helvetica Neue Bold, Helvetica, Arial, sans-serif';
+
+
+      var award_description = document.createElement('span');
+      award_description.id = "panel_award_description";
+      award_description.innerHTML = $.a.awards[key];
+      award_description.style.fontFamily = 'Helvetica Neue Regular, Helvetica, Arial, sans-serif';
+
+      award.appendChild(award_name);
+      award.appendChild(award_description);
+      award_container.appendChild(award);
+
+      panel_header.appendChild(award_container);
+    }
+
+    if (productsLen > 0){
+      var top_products_header = document.createElement('div');
+      top_products_header.id = 'top_products_header';
+      top_products_header.innerHTML = products_headerinnerHTML;
+      top_products_header.style.fontFamily = 'Helvetica Neue Light, Helvetica, Arial, sans-serif';
+
+      panel_header.appendChild(top_products_header);
+    }
+
+    var panel_body = document.createElement('div');
+
+    // Code to add top products in the panel
+    var top_products = document.createElement('div');
+    top_products.id = 'top_products_body';
+
+    var top_products_body = document.createElement('div');
+    for(i = 0; i < productsLen; i++) {
+      var product = products[i];
+
+      if (product.title.length > 30)
+        product.title = product.title.slice(0, 30) + '...';
+
+      product_div = document.createElement('div');
+      product_div.className += "top_product_lines";
+
+      product_title = document.createElement('span');
+      product_title.className = "product_titles";
+      product_title.style.fontFamily = 'Helvetica Neue Bold, Helvetica, Arial, sans-serif';
+      product_title.innerHTML = product.title;
+
+      var product_img = document.createElement('img');
+      product_img.className += "product_img";
+      product_img.onerror = function(){this.src="//s3.amazonaws.com/prod-lccext/public-assets/live-product-page.png";};
+      product_img.onload = function(){
+        this.style.background = "transparent url('about:blank')";
+      };
+      product_img.src = product.img_url.replace(/https?:\/\//, "//");
+      product_img.style.background = "transparent url('//s3.amazonaws.com/prod-lccext/public-assets/animated-loader.gif') no-repeat scroll center center";
+
+      var product_chevron = document.createElement('a');
+      product_chevron.className += "product_chevron";
+
+
+      var product_url = document.createElement('a');
+      product_url.className = "product_links";
+      product_url.style.fontFamily = 'Helvetica Neue Bold, Helvetica, Arial, sans-serif';
+      var attr_ref = "ref=lexity&_vs=livebadge&_vm=" + _vm;
+      if (product.url.indexOf("?") >= 0) {
+        product_url.href = product.url + "&" + attr_ref;
+      } else {
+        product_url.href = product.url + "?" + attr_ref;
+      }
+
+      product_url.appendChild(product_img);
+      product_url.appendChild(product_title);
+      product_url.appendChild(product_chevron);
+
+      product_div.appendChild(product_url);
+      product_div.appendChild(document.createElement('br'));
+      top_products_body.appendChild(product_div);
+    }
+
+    top_products_body.style.fontFamily = 'Helvetica Neue, Helvetica, Arial, sans-serif';
+
+    if (!productsLen && award_keys.length ){
+      award_container.style.borderBottom = '1px solid #CCC';
+    }
+
+    if (productsLen && !award_keys.length){
+      var default_message = document.createElement('span');
+      default_message.id = 'll_default_message';
+
+      default_message.innerHTML = "The Live Store program helps shoppers identify reputable online sellers with track records of strong consumer engagement and loyalty through an independent assessment from Aabaco small business.<br>";
+      default_message.style.fontFamily = 'Helvetica Neue Bold, Helvetica, Arial, sans-serif';
+
+
+      top_products_body.appendChild(default_message);
+    }
+
+    top_products.appendChild(top_products_body);
+    panel_body.appendChild(top_products);
+
+    var panel_footer = document.createElement('div');
+    panel_footer.id = "panel_footer";
+
+    var panel_logo = document.createElement('span');
+    panel_logo.id = "panel_logo";
+
+    var panel_help = document.createElement('a');
+    panel_help.href = 'http://commercecentral.luminate.com/livestore';
+    panel_help.target = '_blank';
+    var panel_help_icon = document.createElement('div');
+    panel_help_icon.className +='panel_help_icon';
+    panel_help.appendChild(panel_help_icon);
+
+    var panel_description = document.createElement('div');
+    panel_description.id = "panel_description";
+    panel_description.innerHTML = 'Shop confidently when you see the Live Store badge';
+    panel_description.style.fontFamily = 'Helvetica Neue Light, Helvetica, Arial, sans-serif';
+
+    panel_footer.appendChild(panel_logo);
+    panel_footer.appendChild(panel_help);
+    panel_footer.appendChild(panel_description);
+
+    ll_panel.appendChild(panel_header);
+    ll_panel.appendChild(panel_body);
+    ll_panel.appendChild(panel_footer);
+    ll_panel.style.display = 'none';
+
+    return ll_panel;
+  },
+  createOverlay: function(zIndex,isMobile,liveBadgePosition) {
+    var overlay = document.createElement('div');
+    overlay.id = 'll_overlay';
+    overlay.className += liveBadgePosition;
+
+    overlay.style.zIndex = zIndex + 2147483646 + '';
+
+    return overlay;
+  },
+
+  showBadge: function(liveBadgePosition) {
+
+    var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    var maxZ = $.f.getHighestZIndex();
+    var ll_badge = $.f.createBadge(maxZ,isMobile,liveBadgePosition);
+    var universal_badge = document.getElementById("universal_badge");
+    universal_badge.insertBefore(ll_badge, universal_badge.firstChild);
+
+    var ie8 = navigator.userAgent.toLowerCase();
+    ie8 = (ie8.indexOf('msie') != -1) ? parseInt(ie8.split('msie')[1]) : false == 8;
+
+    var award_keys = [];
+    if(ie8){
+      for (var i in $.a.awards) {
+        if ($.a.awards.hasOwnProperty(i)) {
+          award_keys.push(i);
+        }
+      }
+    }
+    else{
+      award_keys = Object.keys($.a.awards);
+    }
+
+    var numAwards = award_keys.length;
+    var ll_panel = $.f.createPanel(maxZ,isMobile,liveBadgePosition);
+    var ll_overlay = $.f.createOverlay(maxZ,isMobile,liveBadgePosition);
+    universal_badge.appendChild(ll_panel);
+    universal_badge.appendChild(ll_overlay);
+
+    if (numAwards > 1) {
+      var $award_name = document.getElementById("ll_award_names");
+      var $panel_award = document.getElementById("panel_award");
+      var $panel_award_name = document.getElementById("panel_award_name");
+      var $panel_award_description = document.getElementById("panel_award_description");
+
+      var i = 0;
+       window.setInterval(function() {
+        $.f.fadeOut($award_name, function() {
+          $award_name.innerHTML = award_keys[i];
+          $.f.fadeIn($award_name);
+        });
+
+        $.f.fadeOut($panel_award, function() {
+          $panel_award_name.innerHTML = award_keys[i];
+          $panel_award_description.innerHTML = $.a.awards[award_keys[i]];
+          $.f.fadeIn($panel_award);
+        });
+
+
+        i = (i + 1) % numAwards;
+      }, 5000);
+    }
+
+    var $badge = document.getElementById('ll_badge');
+    var badgePxHeight, panelPxHeight;
+    if(window.getComputedStyle)
+      badgePxHeight = window.getComputedStyle($badge, null).height;
+    else
+      badgePxHeight = $badge.currentStyle.height;
+    var badgeHeight = parseInt(badgePxHeight.replace(/[A-Za-z]+/g, ''));
+
+    var $panel = document.getElementById('ll_panel');
+
+    if(window.getComputedStyle)
+      panelPxHeight = window.getComputedStyle($panel, null).height;
+    else
+      panelPxHeight = $panel.currentStyle.height;
+    var panelHeight = parseInt(panelPxHeight.replace(/[A-Za-z]+/g, ''));
+
+    var $overlay = document.getElementById('ll_overlay');
+    $overlay.style.height = badgePxHeight;
+
+    if($badge.addEventListener){
+      $badge.addEventListener('mouseover', function() {
+        //If google badge placeholder got the content from Google the panel and overlay has to move
+        var googleBadgePlaceHolder = document.getElementById('gts_container');
+        if( !!googleBadgePlaceHolder && googleBadgePlaceHolder.hasChildNodes() && $.a.position == "right"){
+
+          $panel.classList.add("ll_right_l");
+          $overlay.classList.add("ll_right_l");
+          $panel.classList.remove("ll_right_0");
+          $overlay.classList.remove("ll_right_0");
+        };
+        $.f.fadeIn($overlay, function() {
+          $.f.animateSize($overlay, 177, badgeHeight, 310, panelHeight, 200, function() {
+            $panel.style.visibility = 'visible';
+            $panel.style.display = 'block';
+            $.f.fadeOut($overlay);
+          });
+        });
+      });
+      if (isMobile) {
+
+        var $panel_close_icon = document.getElementById("panel_close_icon");
+        var $panel_close_btn = document.getElementById("panel_close_btn");
+        $panel_close_icon.addEventListener('click', function(e) { closePanel(e)});
+        $panel_close_btn.addEventListener('click', function(e) { closePanel(e)});
+
+        function closePanel(e) {
+          e = event;
+          e.preventDefault();
+            $.f.fadeIn($overlay, function() {
+              $panel.style.display = 'none';
+                $.f.animateSize($overlay, 310, panelHeight, 177, badgeHeight, 200, function() {
+                  $.f.fadeOut($overlay);
+                });
+            });
+        };
+      }else{
+        $panel.addEventListener('mouseout', function(e) {
+          // imitate jQuery mouseleave event bubbling behavior
+          var isChildOf = function(pNode, cNode) {
+            if (pNode === cNode) return true;
+            while (cNode && cNode !== pNode) cNode = cNode.parentNode;
+            return cNode === pNode;
+          };
+
+          var target = e.srcElement || e.target;
+          var relTarget = e.relatedTarget || e.toElement;
+
+          if (!isChildOf($panel, relTarget)) {
+            $.f.fadeIn($overlay, function() {
+              $panel.style.display = 'none';
+              $.f.animateSize($overlay, 310, panelHeight, 177, badgeHeight, 200, function() {
+                $.f.fadeOut($overlay);
+              });
+            });
+          }
+        });
+      }
+    }else{
+      $badge.attachEvent('onmouseover', function() {
+        $.f.fadeIn($overlay, function() {
+          $.f.animateSize($overlay, 177, badgeHeight, 310, panelHeight, 200, function() {
+            $panel.style.visibility = 'visible';
+            $panel.style.display = 'block';
+            $.f.fadeOut($overlay);
+          });
+        });
+      });
+
+      $panel.attachEvent('onmouseleave', function(e) {
+        // imitate jQuery mouseleave event bubbling behavior
+        var isChildOf = function(pNode, cNode) {
+          if (pNode === cNode) return true;
+          while (cNode && cNode !== pNode) cNode = cNode.parentNode;
+          return cNode === pNode;
+        };
+
+        var target = e.srcElement || e.target;
+        var relTarget = e.relatedTarget || e.toElement;
+
+        if (!isChildOf($panel, relTarget)) {
+          $.f.fadeIn($overlay, function() {
+            $panel.style.display = 'none';
+            $.f.animateSize($overlay, 310, panelHeight, 177, badgeHeight, 200, function() {
+              $.f.fadeOut($overlay);
+            });
+          });
+        }
+      });
+    }
+  },
+
+  addLiveBadge: function(liveBadgePosition,isMobile){
+    // on mobile suppress the Live bagde when keyboard opens
+      if(isMobile){
+        var inputFields = document.querySelectorAll("input[type=text]");
+        var len = inputFields.length;
+        for(i=0; i<len; i++) {
+          inputFields[i].addEventListener("focus", function(){
+              document.getElementById('ll_panel').style.display = 'none';
+              document.getElementById('ll_award').style.display = 'none';
+              document.getElementById('ll_badge_footer').style.display = 'none';
+              document.getElementById('ll_award_names').style.display = 'none';
+              document.getElementById('ll_badge').style.display = 'none';
+        });
+        inputFields[i].addEventListener("blur", function(){
+
+              document.getElementById('ll_award').style.display = 'block';
+              document.getElementById('ll_badge_footer').style.display = 'block';
+              document.getElementById('ll_award_names').style.display = 'block';
+              document.getElementById('ll_badge').style.display = 'block';
+          });
+        }
+      };
+      $.f.showBadge(liveBadgePosition);
+    },
+
+    addGTSBadge: function(gtsBadgePosition){
+
+        //Google Trusted Stores Code Implementation guidlines: https://support.google.com/trustedstoresmerchant/answer/6063080#variables
+        // BEGIN: Google Trusted Stores Implementation Code
+
+        var gtsId = $.a.gtsSellerId;
+        window.gts=[];gts.push(["id",gtsId]),gts.push(["badge_position","USER_DEFINED"]),gts.push(["badge_container","gts_container"]),gts.push(["locale","en_US"]),function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://www.googlecommerce.com/trustedstores/api/js";var e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(t,e)}();
+        // END: Google Trusted Stores Implementation Code
+
+        var GTSContainer = document.createElement("div");
+        GTSContainer.id = "gts_container";
+        GTSContainer.className += gtsBadgePosition;
+
+
+        if($.a.position == "right"){
+          GTSContainer.className += " ll_right_0 ";
+        }else{
+          GTSContainer.className += " ll_left_0 ";
+        }
+        document.getElementById("universal_badge").appendChild(GTSContainer);
+  },
+  init: function() {
+  // Device detection, filtering mobile and checkout pages, positioning cases
+
+
+    var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    var googleBadgeOptIn = $.a.badge.gtsBadgeOptin;
+    var liveBadgeOptIn =  $.a.badge.liveBadgeOptin;
+
+     if(isMobile){
+      googleBadgeOptIn = false;
+      if ($.a.badge.displayOnMobile == false){
+        liveBadgeOptIn = false;
+      }
+    }
+
+    //On admin pages no badge is displayed, on checkout pages Live Store badge is turned off
+    var pathName = window.location.href;
+    if( pathName.indexOf("checkout") > -1){
+      liveBadgeOptIn = false;
+    };
+    if(pathName.indexOf("_admin=true") > -1){
+      liveBadgeOptIn = false;
+      googleBadgeOptIn = false;
+    }
+
+    //In case store loses awards turn off badge
+    //if (Object.keys($.a.awards).length === 0 || undefined){
+      if($.a.awards === "") {
+	liveBadgeOptIn = false;
+    }
+
+
+    switch(googleBadgeOptIn + " | " + liveBadgeOptIn){
+
+      case "true | true":
+
+        var gtsBadgePosition = "ll_top_l";
+        if($.a.position == "right"){
+          var liveBadgePosition = "ll_right_0";
+        }else{
+          var liveBadgePosition = "ll_left_0"
+        }
+        addStyle(liveBadgePosition,gtsBadgePosition);
+
+      break;
+      case "false | true":
+
+        if(window.matchMedia('(max-device-width: 830px)').matches) {
+          if($.a.position == "right"){
+            var liveBadgePosition = "ll_right_0";
+          }else{
+            var liveBadgePosition = "ll_left_0";
+          }
+        }else{
+          if($.a.position == "right"){
+            var liveBadgePosition = "ll_right_0";
+          }else{
+            var liveBadgePosition = "ll_left_0";
+          }
+        }
+        addStyle(liveBadgePosition,gtsBadgePosition);
+
+      break;
+
+      case "true | false":
+        var gtsBadgePosition = "ll_top_0";
+        addStyle(liveBadgePosition,gtsBadgePosition);
+      break;
+      default:
+        return
+      break
+    }
+
+    var universal_badge = document.createElement("span");
+    universal_badge.id = "universal_badge";
+    document.body.appendChild(universal_badge);
+
+    if($.a.position == "right"){
+      universal_badge.className = "ll_right_s";
+    }else{
+     universal_badge.className = "ll_left_s";
+    }
+
+    //Only adding the badge if the stylesheet arrived from mopstore
+    function addStyle(liveBadgePosition,gtsBadgePosition,isMobile){
+      var linkEl = document.createElement('link');
+        linkEl.href= $.a.assetsLoc + 'css/badge.css';
+        linkEl.rel='stylesheet';
+        linkEl.type='text/css';
+      var head = document.getElementsByTagName('head')[0];
+        head.appendChild(linkEl);
+
+        if(linkEl.addEventListener){
+          linkEl.addEventListener('load', function() {
+            if(liveBadgePosition){$.f.addLiveBadge(liveBadgePosition,isMobile)};
+            if(gtsBadgePosition){$.f.addGTSBadge(gtsBadgePosition)};
+          })
+        }else{
+          linkEl.attachEvent('load', function() {
+            if(liveBadgePosition){$.f.addLiveBadge(liveBadgePosition,isMobile)};
+            if(gtsBadgePosition){$.f.addGTSBadge(gtsBadgePosition)};
+          })
+        }
+    }
+  }
+}
+
+;return s}();$.w.setTimeout(function(){$.f.init()},100)})(window,document,{"badge":{"gtsBadgeOptin":false,"liveBadgeOptin":false},"gtsBadgeOptin":"","liveBadgeOptin":"","gtsSellerId":"","displayOnMobile":"","awards":"","topProducts":"","promotedProducts":"","productsToDisplay":"","storeName":"","storeLogo":"","position":"","assetsLoc":"//s3.amazonaws.com/prod-lccext/public-assets/"});

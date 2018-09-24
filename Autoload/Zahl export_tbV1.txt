@@ -1,0 +1,20 @@
+;
+
+
+(defun atofstr ()
+
+(wcmatch Zeile1) ; auf Zahlen prüfen 
+
+Position wo Zahl ist! 
+
+atof  Zahl in variable speichern. 
+
+und aus string rausziehen.  substring 
+
+wiederholen 
+
+(setq len (strlen Zeile1)) 
+(setq i 0)
+
+(while (< i len) 
+  (atof 

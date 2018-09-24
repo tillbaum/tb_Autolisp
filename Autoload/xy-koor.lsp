@@ -1,0 +1,56 @@
+;;aufruf xykoor Beschriftet Punkte mit X-,Y- und (optional) Z-Koordinate
+;
+(defun c:xykoor()
+ (setq tgr (getreal "\nTextgrösse: "))
+
+ (setq nks (getint (strcat "\nWieviel Nachkommastellen <" (if nks (itoa nks)(itoa (setq nks 2))) ">: ")))
+
+  (if nks (setq nks nks)(setq nks 2))
+  (setq zwert nil temp nil)
+  (initget "Ja Nein")
+  (setq temp (getkword "\nauch die Höhe anschreiben Ja/<N>ein: "))
+  (if (wcmatch temp "J*")(setq zwert T))
+ (setq as (ssget '((0 . "POINT"))))
+ (setq zaehl 0)
+ (setq en (ssname as zaehl))
+ (while en
+  (setq pkt (cdr (assoc 10 (entget en))))
+  (setq xw (nth 0 pkt))
+  (setq yw (nth 1 pkt))
+  (setq zw (nth 2 pkt))
+  (setq xtw (strcat "X: " (rtos xw 2 nks)))
+  (setq ytw (strcat "Y: " (rtos yw 2 nks)))
+  (setq ztw (strcat "Z: " (rtos zw 2 nks)))
+  (entmake
+   (list '(0 . "TEXT")
+  (cons 10 (list (+ xw (* 0.8 tgr)) (+ yw (* 0.6 tgr)) 0.0))
+  (cons 11 (list (+ xw (* 0.8 tgr)) (+ yw (* 0.6 tgr)) 0.0))
+  (cons 40 tgr)
+  (cons 1 xtw)
+   )
+  )
+  (entmake
+   (list '(0 . "TEXT")
+  (cons 10 (list (+ xw (* 0.8 tgr)) (- yw (* 1.2 tgr)) 0.0))
+  (cons 11 (list (+ xw (* 0.8 tgr)) (- yw (* 1.2 tgr)) 0.0))
+  (cons 40 tgr)
+  (cons 1 ytw)
+   )
+  )
+   (if zwert
+     (progn
+  (entmake
+   (list '(0 . "TEXT")
+  (cons 10 (list (+ xw (* 0.8 tgr)) (- yw (* 1.2 tgr) (* 1.8 tgr)) 0.0))
+  (cons 11 (list (+ xw (* 0.8 tgr)) (- yw (* 1.2 tgr) (* 1.8 tgr)) 0.0))
+  (cons 40 tgr)
+  (cons 1 ztw)
+   )
+  )
+  )
+     )
+  (setq zaehl (1+ zaehl))
+  (setq en (ssname as zaehl))
+ )
+)
+(prompt "\nStarten mit xykoor  ") 
